@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre a RP Alternativo</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --cor-white: #fff;
+            --cor-dark: #1E1E1E;
+            --cor-medium-gray: #EAEAEA;
+            --cor-light-gray: #F7F7F7;
+            --cor-text-on-dark: #FFFFFF;
+            --cor-text-on-light: #222222;
+            --radius: 16px;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Work Sans', sans-serif;
+            background-color: var(--cor-light-gray);
+            color: var(--cor-text-on-light);
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        h1,
+        h2,
+        h3 {
+            margin: 0;
+            font-weight: 700;
+        }
+
+        p {
+            margin: 0;
+            line-height: 1.7;
+            color: #555;
+            text-align: justify;
+        }
+
+        p2 {
+            margin: 0;
+            line-height: 1.7;
+            color: #555;
+            text-align: justify;
+            max-width: 95%;
+        }
+
+        .about-page-wrapper {
+            padding: 0px;
+        }
+
+
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background-color: transparent;
+            transition: background-color 0.4s ease;
+            z-index: 10;
+            box-sizing: border-box;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+
+        .site-header nav ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            z-index: 30;
+            flex-wrap: wrap;
+        }
+
+        .site-header nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 22px;
+            transition: var(--transition);
+
+        }
+
+        .site-header nav a:hover {
+            opacity: 50%;
+        }
+
+        .site-header.scrolled {
+            background-color: var(--cor-dark);
+        }
+
+        .logo-rpa {
+            display: flex;
+            height: 35px;
+            width: auto;
+        }
+
+        .logo-rpa-mobile {
+            display: none;
+            height: 35px;
+            width: auto;
+        }
+
+        .logo-ufma {
+            height: 45px;
+            width: auto;
+        }
+
+        .menu {
+            display: none;
+        }
+
+        .nav {
+            display: flex;
+        }
+
+
+        .has-dropdown {
+            position: relative;
+        }
+
+        .has-dropdown>a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1999;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+        .menu-overlay.is-open {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .side-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 70%;
+            max-width: 320px;
+            height: 100vh;
+            background-color: var(--cor-white);
+            z-index: 2000;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+
+
+            transform: translateX(100%);
+            visibility: hidden;
+            transition: transform 0.4s ease-in-out, visibility 0.4s ease-in-out;
+        }
+
+        .side-menu.is-open {
+            transform: translateX(0);
+            visibility: visible;
+        }
+
+        .side-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .close-menu-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--cor-text-dark);
+        }
+
+        .side-menu-links {
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            list-style: none;
+        }
+
+        .side-menu-links ul {
+            text-decoration: none;
+        }
+
+        .side-menu-links li a {
+            display: block;
+            padding: 15px;
+            font-size: 1.2rem;
+            color: var(--cor-text-dark);
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .side-menu-links li a:hover {
+            background-color: var(--cor-light-gray);
+            color: var(--cor-laranja);
+        }
+
+        .body-no-scroll {
+            overflow: hidden;
+        }
+
+
+        .has-dropdown {
+            position: relative;
+        }
+
+
+        .dropdown-menu {
+            position: absolute;
+            top: 150%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--cor-white);
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            min-width: 200px;
+            list-style: none;
+            z-index: 1010;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, top 0.3s ease, visibility 0.3s ease;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 15px;
+            color: var(--cor-dark);
+            border-radius: 4px;
+            font-size: 16px;
+            white-space: nowrap;
+            transition: var(--transition);
+        }
+
+        .dropdown-menu a:hover {
+            background-color: var(--cor-light-gray);
+            color: var(--cor-laranja);
+        }
+
+        .has-dropdown:hover>.dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            top: 120%;
+        }
+
+        .has-dropdown>a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .about-intro-card {
+            background: var(--cor-dark);
+            color: var(--cor-text-on-dark);
+            padding: 40px 10%;
+            padding-top: 150px;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+
+        .about-intro-card .logo {
+            height: 35px;
+            width: auto;
+            margin-bottom: 25px;
+        }
+
+        .about-intro-card h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .about-intro-card p {
+            color: #ccc;
+        }
+
+        .about-details-card p {
+            text-align: justify;
+            color: black;
+        }
+
+        .about-intro-card p:not(:last-child) {
+            margin-bottom: 1em;
+        }
+
+        .about-details-card {
+            background: white;
+            padding: 40px 10%;
+            border-radius: 0 0 var(--radius) var(--radius);
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 30px 0;
+        }
+
+        .detail-item:not(:last-child) {
+            border-bottom: 1px solid #dcdcdc;
+        }
+
+        .detail-item .icon {
+            flex-shrink: 0;
+            width: 24px;
+            height: 24px;
+            margin-top: 4px;
+            color: var(--cor-text-on-light);
+        }
+
+        .detail-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .about-contact-card {
+            background-color: var(--cor-medium-gray);
+            border-radius: var(--radius);
+            padding-bottom: 30px;
+            padding: 40px 10%;
+        }
+
+        .contact-item {
+            display: flex;
+            gap: 20px;
+        }
+
+        .contact-item .icon {
+            flex-shrink: 0;
+            width: 24px;
+            height: 24px;
+        }
+
+        .contact-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .contact-item a {
+            text-decoration: none;
+            color: #555;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item a:hover {
+            color: #000;
+        }
+
+        .site-footer {
+            background-color: var(--cor-dark);
+            color: var(--cor-text-light);
+            padding: 50px 0;
+        }
+
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .footer-socials a {
+            margin-left: 15px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 30px;
+            text-align: center;
+            font-size: 15px;
+        }
+
+        .footer-bottom p {
+            margin: 0;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .bi-instagram,
+        .bi-twitter-x,
+        .bi-envelope-at-fill,
+        .bi-facebook {
+            width: 25px;
+            height: 25px;
+            fill: white;
+        }
+
+        @media (max-width: 950px) {
+
+            .site-header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .site-header nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+
+            }
+
+            .logo-ufma {
+                display: none;
+            }
+
+            .menu-toggle-btn {
+                display: block;
+            }
+
+            .about-intro-card h1 {
+                font-size: 2.2rem;
+            }
+
+            .detail-item h3,
+            .contact-item h3 {
+                font-size: 1.3rem;
+            }
+        }
+
+
+        @media (max-width: 600px) {
+
+            .site-header {
+                flex-direction: row;
+            }
+
+            .site-header nav a {
+                font-size: 16px;
+
+            }
+
+            .hero-button svg {
+                width: 15px;
+            }
+
+            .container-flipbook {
+                display: none;
+            }
+
+            .logo-rpa {
+                display: none;
+            }
+
+            .logo-rpa-mobile {
+                display: flex;
+                height: 60px;
+            }
+
+            .menu {
+                display: flex;
+            }
+
+            .nav {
+                display: none;
+            }
+
+            .footer-bottom {
+                font-size: 10px;
+            }
+
+            .about-intro-card {
+                padding-top: 100px;
+            }
+
+            .about-details-card {
+                padding-bottom: 0px;
+            }
+
+            .about-contact-card {
+                padding: 25px;
+                padding-bottom: 30px;
+            }
+
+            .about-details-card {
+                padding-left: 40px;
+                padding-right: 40px;
+            }
+
+            .about-intro-card h1 {
+                font-size: 1.8rem;
+            }
+
+            .detail-item h3,
+            .contact-item h3 {
+                font-size: 1.2rem;
+            }
+
+            .detail-item {
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="menu-overlay" class="menu-overlay"></div>
+    <nav id="side-menu" class="side-menu">
+        <div class="side-menu-header">
+            <a>
+                <img class="logo-header" style="width: 100px; height: auto;"
+                    src="https://rpalternativo.ufma.br/wp-content/uploads/2025/06/RP-2-sem-fundo-preto.png"
+                    alt="Logotipo da Revista RP" />
+            </a>
+            <button id="close-menu-btn" class="close-menu-btn" aria-label="Fechar menu">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="currentColor">
+                    <path
+                        d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+                </svg>
+            </button>
+        </div>
+        <ul class="side-menu-links">
+            <li><a href="https://rpalternativo.ufma.br/sobre.html" style="color: #F37013;">Sobre a Revista</a></li>
+            <li class="has-dropdown">
+                <a>
+                    Todas as edições
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+                    </svg>
+                </a>
+                <ul class="dropdown-menu" style="padding: 20px;">
+                    <li><a style="color: black;"
+                            href="https://rpalternativo.ufma.br/edi%C3%A7%C3%B5es/edi%C3%A7%C3%A3o-51.html#">Edição #51
+                            (2024.2)</a></li>
+                    <li><a style="color: black;"
+                            href="https://rpalternativo.ufma.br/edi%C3%A7%C3%B5es/edi%C3%A7%C3%A3o-50.html#">Edição #50
+                            (2024.1)</a></li>
+                    <li><a style="color: black;"
+                            href="http://rpalternativo.ufma.br/edi%C3%A7%C3%B5es/edi%C3%A7%C3%A3o-49.html#">Edição #49
+                            (2023.1)</a></li>
+                    <li><a style="color: black;"
+                            href="https://rpalternativo.ufma.br/edi%C3%A7%C3%B5es/edi%C3%A7%C3%A3o-48.html#">Edição #48
+                            (2021.1)</a></li>
+                    <li><a style="color: black;"
+                            href="https://rpalternativo.ufma.br/edi%C3%A7%C3%B5es/edi%C3%A7%C3%A3o-46.html#">Edição #46
+                            (2019.2)</a></li>
+                    <li><a style="color: black;" href="http://rpalternativo.ufma.br/edicoes-anteriores.html">Ver
+                            todas</a></li>
+                </ul>
+            </li>
+            <li><a href="http://rpalternativo.ufma.br/expediente.html">Expediente #52</a></li>
+            <li><a href="https://www.rpalternativo.ufma.br/galeria.html">Galeria</a></li>
+            <li><a href="https://portalpadrao.ufma.br/" target="_blank" rel="noopener noreferrer">UFMA</a></li>
+            <li><a href="mailto: rpalternativo@rpalternativo.ufma.br">Fale Conosco</a></li>
+        </ul>
+    </nav>
+    <header id="header" class="site-header">
+        <a href="http://rpalternativo.ufma.br/index.html#">
+            <img class="logo-rpa" src="https://i.ibb.co/b5g0507n/RP-1-sem-fundo-branco.png"
+                alt="Logotipo da Revista RPA" />
+            <img class="logo-rpa-mobile" src="https://i.ibb.co/6RXR8gXJ/RP-3-sem-fundo-branco.png"
+                alt="Logotipo da Revista RPA" />
+        </a>
+
+        <nav class="nav-header">
+            <ul>
+                <li style="display: none;"><a href="#">Início</a></li>
+                <li class="nav"><a href="https://rpalternativo.ufma.br/sobre.html" style="color: #F37013;">Sobre a
+                        Revista</a></li>
+                <li class="has-dropdown">
+                    <a>
+                        Edições Anteriores
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+                        </svg>
+                    </a>
+                    <ul class="dropdown-menu" style="padding: 20px;">
+                        <li><a style="color: black;"
+                                href="https://rpalternativo.ufma.br/edi%C3%A7%C3%B5es/edi%C3%A7%C3%A3o-51.html#">Edição
+                                #51 (2024.2)</a></li>
+                        <li><a style="color: black;"
+                                href="https://rpalternativo.ufma.br/edi%C3%A7%C3%B5es/edi%C3%A7%C3%A3o-50.html#">Edição
+                                #50 (2024.1)</a></li>
+                        <li><a style="color: black;"
+                                href="http://rpalternativo.ufma.br/edi%C3%A7%C3%B5es/edi%C3%A7%C3%A3o-49.html#">Edição
+                                #49 (2023.1)</a></li>
+                        <li><a style="color: black;"
+                                href="https://rpalternativo.ufma.br/edi%C3%A7%C3%B5es/edi%C3%A7%C3%A3o-48.html#">Edição
+                                #48 (2021.1)</a></li>
+                        <li><a style="color: black;"
+                                href="https://rpalternativo.ufma.br/edi%C3%A7%C3%B5es/edi%C3%A7%C3%A3o-46.html#">Edição
+                                #46 (2019.2)</a></li>
+                        <li><a style="color: black;" href="http://rpalternativo.ufma.br/edicoes-anteriores.html">Ver
+                                todas</a></li>
+                    </ul>
+                </li>
+                <li class="nav"><a href="http://rpalternativo.ufma.br/expediente.html">Expediente #52</a></li>
+                <li class="nav"><a href="https://www.rpalternativo.ufma.br/galeria.html">Galeria</a></li>
+                <li class="nav">
+                    <a href="https://portalpadrao.ufma.br/" target="_blank" rel="noopener noreferrer">
+                        <img class="logo-ufma"
+                            src="https://portalpadrao.ufma.br/site/institucional/superintendencias/sce/manual-da-marca/png-logo-ufma-branco.png/@@images/97d6f50d-366b-4768-b057-9d2cf6d0b353.png"
+                            alt="Logotipo da UFMA" />
+                    </a>
+                </li>
+                <li class="menu" id="open-menu-btn">
+                    <a href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                            fill="#e3e3e3">
+                            <path d="M120-680v-80h720v80H120Zm0 480v-80h720v80H120Zm0-240v-80h720v80H120Z" />
+                        </svg>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="about-page-wrapper">
+
+            <section class="about-intro-card">
+                <h1>Sobre a RP Alternativo</h1>
+                <p>
+                    A RP Alternativo é uma revista laboratório produzida pelos discentes do curso de Comunicação Social
+                    com habilitação em Relações Públicas do Departamento de Comunicação Social da Universidade Federal
+                    do Maranhão (UFMA). A cada semestre, uma nova edição é construída por meio do planejamento editorial
+                    e projeto gráfico ensinados em sala de aula na disciplina “Produção de Revista Institucional”.
+                </p>
+                <p>
+                    A revista existe há mais de 30 anos, criada como boletim informativo em agosto de 1993 durante a
+                    disciplina “Redação em Relações Públicas II”. Em 1997, o boletim evoluiu para a revista
+                    institucional que se mantém até a edição atual. Com uma longa trajetória, a revista tem como
+                    <strong>missão</strong>
+                    despertar a criatividade dos estudantes ao praticar a redação institucional e vivenciar todas as
+                    etapas desse tipo de criação: produção de pautas e de matérias, a revisão, a diagramação e o
+                    lançamento. Além de informar estudantes e profissionais de todo o Brasil sobre a área de Relações
+                    Públicas no mundo acadêmico e no mercado de trabalho.
+                </p>
+                <p>
+                    A <strong>visão</strong> da revista é promover, cada vez mais, as Relações Públicas, divulgando-a
+                    como profissão
+                    atuante, e as habilidades dos graduandos que constroem essas produções aliadas aos
+                    <strong>valores</strong> de
+                    transparência, ética, autenticidade, qualidade e entretenimento.
+                </p>
+            </section>
+
+            <section class="about-details-card">
+                <div class="detail-item">
+                    <div class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                            fill="#1c1c1c">
+                            <path
+                                d="M480-80q-82 0-155-31.5t-127.5-86Q143-252 111.5-325T80-480q0-83 31.5-155.5t86-127Q252-817 325-848.5T480-880q83 0 155.5 31.5t127 86q54.5 54.5 86 127T880-480q0 82-31.5 155t-86 127.5q-54.5 54.5-127 86T480-80Zm0-82q26-36 45-75t31-83H404q12 44 31 83t45 75Zm-104-16q-18-33-31.5-68.5T322-320H204q29 50 72.5 87t99.5 55Zm208 0q56-18 99.5-55t72.5-87H638q-9 38-22.5 73.5T584-178ZM170-400h136q-3-20-4.5-39.5T300-480q0-21 1.5-40.5T306-560H170q-5 20-7.5 39.5T160-480q0 21 2.5 40.5T170-400Zm216 0h188q3-20 4.5-39.5T580-480q0-21-1.5-40.5T574-560H386q-3 20-4.5 39.5T380-480q0 21 1.5 40.5T386-400Zm268 0h136q5-20 7.5-39.5T800-480q0-21-2.5-40.5T790-560H654q3 20 4.5 39.5T660-480q0 21-1.5 40.5T654-400Zm-16-240h118q-29-50-72.5-87T584-782q18 33 31.5 68.5T638-640Zm-234 0h152q-12-44-31-83t-45-75q-26 36-45 75t-31 83Zm-200 0h118q9-38 22.5-73.5T376-782q-56 18-99.5 55T204-640Z" />
+                        </svg>
+                    </div>
+                    <div class="text-content">
+                        <h3>SITE</h3>
+                        <p>Como forma de pôr em prática a valorização da memória organizacional e da comunicação
+                            institucional da RP Alternativo, foi desenvolvido um projeto prático voltado para o resgate,
+                            preservação e organização de todas as edições da revista, que incluiu a criação deste site.
+                        </p>
+                        <p>
+                            A iniciativa foi conduzida pelas discentes Giovana Garcia, Kerienn Teles, Maria Victória
+                            Pires e Samantha Santos, sob orientação da professora Mariela Carvalho. O projeto não teve
+                            como objetivo apenas reunir esse valioso material, que até então estava quase inacessível,
+                            mas também consolidar a identidade da revista como um projeto contínuo e institucionalizado.
+                            Com a colaboração do Departamento de Comunicação Social, foi solicitada à Superintendência
+                            de Tecnologia (STI) da UFMA a criação do e-mail institucional e do site para a revista. A
+                            formalização da iniciativa junto ao Departamento, garante que a produção da revista seja
+                            reconhecida como um trabalho legítimo, único e permanente dentro da universidade.
+                        </p>
+                        <p>
+                            Esse trabalho revela o cuidado com a memória acadêmica e afetiva de todos que fizeram e
+                            ainda farão parte da revista. Mais que arquivar páginas antigas, a intenção é que nossas
+                            histórias, ideias e aprendizados não se percam com o tempo, mas estejam sempre ali,
+                            disponíveis para serem lembrados, valorizados e usados como referências pelas próximas
+                            gerações de estudantes de Relações Públicas da Universidade Federal do Maranhão. Afinal,
+                            conectar-se com o passado é reconhecer o valor da trajetória de todos os discentes do curso,
+                            aqueles que sonharam antes de nós e hoje nos inspiram. É, também, consolidar o presente e
+                            projetar com propósito os caminhos que moldarão os profissionais de RP.
+                        </p>
+                    </div>
+                    </div>
+        <div class="detail-item">
+            <div class="icon">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#1c1c1c">
+                    <path
+                        d="M480-160q-48-38-104-59t-116-21q-42 0-82.5 11T100-198q-21 11-40.5-1T40-234v-482q0-11 5.5-21T62-752q46-24 96-36t102-12q58 0 113.5 15T480-740v484q51-32 107-48t113-16q36 0 70.5 6t69.5 18v-480q15 5 29.5 10.5T898-752q11 5 16.5 15t5.5 21v482q0 23-19.5 35t-40.5 1q-37-20-77.5-31T700-240q-60 0-116 21t-104 59Zm80-200v-380l200-200v400L560-360Zm-160 65v-396q-33-14-68.5-21.5T260-720q-37 0-72 7t-68 21v397q35-13 69.5-19t70.5-6q36 0 70.5 6t69.5 19Zm0 0v-396 396Z" />
+                </svg>
+            </div>
+            <div class="text-content">
+                <h3>TEXTOS DAS EDITORIAS CLÁSSICAS</h3>
+                <p><strong>Look in:</strong> Esta editoria é voltada para destacar os últimos principais eventos
+                    relacionados à área de Relações Públicas e Comunicação, como grandes congressos e eventos
+                    profissionais, além de homenagear os prêmios que pessoas egressas do curso conquistaram. Nos últimos
+                    anos, a Look In trouxe temas diferenciados do mercado de trabalho de RP que merecem atenção.
+                </p>
+                <p><strong>Afinal, o que é?:</strong> Sempre apresenta conceitos, palavras e termos comuns para a área
+                    das Relações Públicas que podem não ter significados explícitos ou universalmente conhecidos.</p>
+
+                <p><strong>Entrevista:</strong> Traz opiniões inovadoras, especializadas e, às vezes, críticas, de
+                    profissionais de renome sobre suas próprias carreiras ou temas de interesse, para que os estudantes
+                    possam ter contato com as visões experientes de quem faz parte do mercado de trabalho.</p>
+
+                <p><strong>Resumos de TCC’s:</strong> Elenca os Trabalhos de Conclusão de Curso dos discentes de
+                    Comunicação Social do semestre anterior ao lançamento da revista, como forma de valorização e
+                    preservação desses trabalhos.</p>
+
+                <p><strong>Prata da Casa:</strong> Expõe a trajetória de alguma personalidade que se destacou
+                    profissionalmente durante ou após cursar Comunicação Social na UFMA. É uma forma de
+                    representatividade, a fim de que os estudantes possam se espelhar em histórias brilhantes.</p>
+
+                <p><strong>Conhecendo o Mestre:</strong> Menciona diferentes informações de algum integrante do corpo
+                    docente do curso de Comunicação Social, detalhando vivências e ações que eles considerem importantes
+                    para a construção acadêmica e profissional das suas vidas.</p>
+
+                <p><strong>Crônica:</strong> É um momento descontraído dos discentes, quando podem colocar reflexões
+                    mais íntimas em pauta através de comentários e opiniões sobre um assunto específico.</p>
+
+                <p><strong>Resenha:</strong> Expressa pontos de vista dos redatores sobre um determinado produto
+                    artístico, como livros, filmes e séries, relacionados a área de Relações Públicas.</p>
+            </div>
+        </div>
+        </div>
+
+        </section>
+
+        <section class="about-contact-card">
+            <div class="contact-item">
+                <div class="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                        fill="#1c1c1c">
+                        <path
+                            d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480v58q0 59-40.5 100.5T740-280q-35 0-66-15t-52-43q-29 29-65.5 43.5T480-280q-83 0-141.5-58.5T280-480q0-83 58.5-141.5T480-680q83 0 141.5 58.5T680-480v58q0 26 17 44t43 18q26 0 43-18t17-44v-58q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93h200v80H480Zm0-280q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35Z" />
+                    </svg>
+                </div>
+                <div class="text-content">
+                    <h3>Fale conosco</h3>
+                    <p2>
+                        <a href="mailto:rpalternativo@ufma.br">email: rpalternativo@ufma.br</a><br>
+                        <a href="https://www.instagram.com/rpalternativo">instagram: @rpalternativo</a>
+                    </p2>
+                </div>
+            </div>
+        </section>
+
+        </div>
+    </main>
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-top">
+                <a href="https://rpalternativo.ufma.br" style="margin-left: 25px;"><img class="logo-header"
+                        src="https://i.ibb.co/6RXR8gXJ/RP-3-sem-fundo-branco.png" style="width: 70px;"
+                        alt="Logotipo da Revista RPA"></a>
+
+                <div class="footer-socials" style="margin-right: 25px;">
+                    <a href="https://www.instagram.com/rpalternativo" aria-label="Instagram"><svg
+                            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-instagram" viewBox="0 0 16 16">
+                            <path
+                                d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334" />
+                        </svg></a>
+                    <a href="mailto: rpalternativo@rpalternativo.ufma.br" aria-label="email"><svg
+                            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-envelope-at-fill" viewBox="0 0 16 16">
+                            <path
+                                d="M2 2A2 2 0 0 0 .05 3.555L8 8.414l7.95-4.859A2 2 0 0 0 14 2zm-2 9.8V4.698l5.803 3.546zm6.761-2.97-6.57 4.026A2 2 0 0 0 2 14h6.256A4.5 4.5 0 0 1 8 12.5a4.49 4.49 0 0 1 1.606-3.446l-.367-.225L8 9.586zM16 9.671V4.697l-5.803 3.546.338.208A4.5 4.5 0 0 1 12.5 8c1.414 0 2.675.652 3.5 1.671" />
+                            <path
+                                d="M15.834 12.244c0 1.168-.577 2.025-1.587 2.025-.503 0-1.002-.228-1.12-.648h-.043c-.118.416-.543.643-1.015.643-.77 0-1.259-.542-1.259-1.434v-.529c0-.844.481-1.4 1.26-1.4.585 0 .87.333.953.63h.03v-.568h.905v2.19c0 .272.18.42.411.42.315 0 .639-.415.639-1.39v-.118c0-1.277-.95-2.326-2.484-2.326h-.04c-1.582 0-2.64 1.067-2.64 2.724v.157c0 1.867 1.237 2.654 2.57 2.654h.045c.507 0 .935-.07 1.18-.18v.731c-.219.1-.643.175-1.237.175h-.044C10.438 16 9 14.82 9 12.646v-.214C9 10.36 10.421 9 12.485 9h.035c2.12 0 3.314 1.43 3.314 3.034zm-4.04.21v.227c0 .586.227.8.581.8.31 0 .564-.17.564-.743v-.367c0-.516-.275-.708-.572-.708-.346 0-.573.245-.573.791" />
+                        </svg></a>
+                    <a href="https://portalpadrao.ufma.br/" target="_blank" rel="noopener noreferrer">
+                        <img class="bi bi-facebook"
+                            src="https://portalpadrao.ufma.br/site/institucional/superintendencias/sce/manual-da-marca/png-logo-ufma-branco.png/@@images/97d6f50d-366b-4768-b057-9d2cf6d0b353.png"
+                            alt="Logotipo da UFMA" /></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Revista RP Alternativo - Todos os direitos reservados</p>
+                <p>Av. dos Portugueses, 1966, Bacanga, São Luís, MA - CEP: 65080-805</p>
+            </div>
+            <div
+                style="display: flex; align-items: center; justify-content: center; margin-top: 20px; margin-bottom: 20px;">
+                <a href="https://www.fluxia.dev.br">
+                    <img style="width: 150px; height: auto;"
+                        src="https://www.fluxia.dev.br/minha-revista/imagens/by-fluxia.png" />
+                </a>
+            </div>
+        </div>
+    </footer>
+    <script src="script-global.js" defer></script>
+    <script src="/script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria | RP Alternativo</title>
+    <link rel="icon" href="https://i.ibb.co/6RXR8gXJ/RP-3-sem-fundo-branco.png">
+     <meta charset="UTF-8">
+  <meta name="theme-color" content="#1E1E1E">
+  <link rel="icon" href="https://i.ibb.co/6RXR8gXJ/RP-3-sem-fundo-branco.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --cor-dark: #1E1E1E;
+            --cor-white: #fff;
+            --cor-light-gray: #f0f0f0;
+            --cor-text-dark: #1f1f1f;
+            --cor-text-light: #f5f5f5;
+            --cor-text-secondary: #a0a0a0;
+            --cor-laranja: #F37013;
+            --radius: 12px;
+            --transition: all 0.3s ease-in-out;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Work Sans', sans-serif;
+            background-color: var(--cor-light-gray);
+            color: var(--cor-text-dark);
+        }
+
+        .body-no-scroll {
+            overflow: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background-color: transparent;
+            transition: background-color 0.4s ease;
+            z-index: 10;
+            box-sizing: border-box;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+
+        .site-header nav ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            z-index: 30;
+            flex-wrap: wrap;
+        }
+
+        .site-header nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 22px;
+            transition: var(--transition);
+
+        }
+
+        .site-header nav a:hover {
+            opacity: 50%;
+        }
+
+        .site-header.scrolled {
+            background-color: var(--cor-dark);
+        }
+
+        .logo-rpa {
+            display: flex;
+            height: 35px;
+            width: auto;
+        }
+
+        .logo-rpa-mobile {
+            display: none;
+            height: 35px;
+            width: auto;
+        }
+
+        .logo-ufma {
+            height: 45px;
+            width: auto;
+        }
+
+        .menu {
+            display: none;
+        }
+
+        .nav {
+            display: flex;
+        }
+
+
+        .has-dropdown {
+            position: relative;
+        }
+
+        .has-dropdown>a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1999;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+        .menu-overlay.is-open {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .side-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 70%;
+            max-width: 320px;
+            height: 100vh;
+            background-color: var(--cor-white);
+            z-index: 2000;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            transform: translateX(100%);
+            visibility: hidden;
+            transition: transform 0.4s ease-in-out, visibility 0.4s ease-in-out;
+        }
+
+        .side-menu.is-open {
+            transform: translateX(0);
+            visibility: visible;
+        }
+
+        .side-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .close-menu-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--cor-text-dark);
+        }
+
+        .side-menu-links {
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            list-style: none;
+        }
+
+        .side-menu-links ul {
+            text-decoration: none;
+        }
+
+        .side-menu-links li a {
+            display: block;
+            padding: 15px;
+            font-size: 1.2rem;
+            color: var(--cor-text-dark);
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .side-menu-links li a:hover {
+            background-color: var(--cor-light-gray);
+            color: var(--cor-laranja);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 150%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--cor-white);
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            min-width: 200px;
+            list-style: none;
+            z-index: 1010;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, top 0.3s ease, visibility 0.3s ease;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 15px;
+            color: var(--cor-dark);
+            border-radius: 4px;
+            font-size: 16px;
+            white-space: nowrap;
+            transition: var(--transition);
+        }
+
+        .dropdown-menu a:hover {
+            background-color: var(--cor-light-gray);
+            color: var(--cor-laranja);
+        }
+
+        .has-dropdown:hover>.dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            top: 120%;
+        }
+
+        .slider-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slider img {
+            width: 100%;
+            flex-shrink: 0;
+            height: 880px;
+            object-fit: cover;
+        }
+
+        .slider-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        .slider-nav button {
+            background-color: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            line-height: 1;
+            transition: background-color 0.3s;
+        }
+
+        .slider-nav button:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .filter-buttons {
+            text-align: center;
+            margin: 40px 20px;
+        }
+
+        .filter-buttons button {
+            font-family: 'Work Sans', sans-serif;
+            background-color: transparent;
+            border: 2px solid #1f1f1f;
+            color: #1f1f1f;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .filter-buttons button:hover {
+            background-color: var(--cor-dark);
+            color: var(--cor-white);
+            border-color: var(--cor-dark);
+        }
+
+        .filter-buttons button.active {
+            background-color: #1f1f1f;
+            color: var(--cor-white);
+            border-color: #1f1f1f;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+            padding: 0 5%;
+            margin-bottom: 100px;
+        }
+
+        .photo-item {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            border-radius: var(--radius);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s;
+            isolation: isolate; 
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s;
+            transform: translateZ(0); 
+            -webkit-transform: translateZ(0);
+        }
+
+        .photo-item:hover img {
+            transform: scale(1.1) translateZ(0);
+             -webkit-transform: scale(1.1) translateZ(0);
+        }
+
+        .photo-item.hidden {
+            display: none;
+        }
+
+        .photo-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+        
+        .photo-modal-overlay.is-visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .photo-modal-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+        }
+
+        .photo-modal-content img {
+            display: block;
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 8px;
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: none;
+            border: none;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+        }
+
+        .site-footer {
+            background-color: var(--cor-dark);
+            color: var(--cor-text-light);
+            padding: 50px 0;
+        }
+
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .footer-socials a {
+            margin-left: 15px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 30px;
+            text-align: center;
+            font-size: 15px;
+        }
+
+        .footer-bottom p {
+            margin: 0;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .bi-instagram,
+        .bi-twitter-x,
+        .bi-envelope-at-fill,
+        .bi-facebook {
+            width: 25px;
+            height: 25px;
+        }
+
+        @media (max-width: 1100px) {
+            .site-header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+            .site-header nav ul {
+                gap: 15px;
+                justify-content: center;
+            }
+            .logo-ufma {
+                display: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .site-header {
+                flex-direction: row;
+            }
+            .site-header nav a {
+                font-size: 16px;
+            }
+            .logo-rpa {
+                display: none;
+            }
+            .logo-rpa-mobile {
+                display: flex;
+                height: 60px;
+            }
+            .menu {
+                display: flex;
+            }
+            .nav {
+                display: none;
+            }
+            .footer-bottom {
+                font-size: 10px;
+            }
+            .slider img {
+                height: 300px;
+            }
+            .photo-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .modal-close-btn {
+                top: 10px;
+                right: 15px;
+                color: var(--cor-dark);
+                background-color: rgba(255, 255, 255, 0.7);
+                border-radius: 50%;
+                width: 35px;
+                height: 35px;
+                line-height: 35px;
+                font-size: 1.5rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+ <div id="menu-overlay" class="menu-overlay"></div>
+    <nav id="side-menu" class="side-menu">
+        <div class="side-menu-header">
+            <a>
+                <img class="logo-header" style="width: 100px; height: auto;"
+                    src="https://rpalternativo.ufma.br/wp-content/uploads/2025/06/RP-2-sem-fundo-preto.png"
+                    alt="Logotipo da Revista RP" />
+            </a>
+            <button id="close-menu-btn" class="close-menu-btn" aria-label="Fechar menu">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="currentColor">
+                    <path
+                        d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+                </svg>
+            </button>
+        </div>
+        <ul class="side-menu-links">
+            <li><a href="https://rpalternativo.ufma.br/sobre.html">Sobre a Revista</a></li>
+            <li class="has-dropdown">
+                <a>
+                    Todas as edições
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+                    </svg>
+                </a>
+                <ul class="dropdown-menu" style="padding: 20px;">
+                    <li><a style="color: black;"
+                            href="https://rpalternativo.ufma.br/edi%C3%A7%C3%B5es/edi%C3%A7%C3%A3o-51.html#">Edição #51
+                            (2024.2)</a></li>
+                    <li><a style="color: black;"
+                            href="https://rpalternativo.ufma.br/edi%C3%A7%C3%B5es/edi%C3%A7%C3%A3o-50.html#">Edição #50
+                            (2024.1)</a></li>
+                    <li><a style="color: black;"
+                            href="http://rpalternativo.ufma.br/edi%C3%A7%C3%B5es/edi%C3%A7%C3%A3o-49.html#">Edição #49
+                            (2023.1)</a></li>
+                    <li><a style="color: black;"
+                            href="https://rpalternativo.ufma.br/edi%C3%A7%C3%B5es/edi%C3%A7%C3%A3o-48.html#">Edição #48
+                            (2021.1)</a></li>
+                    <li><a style="color: black;"
+                            href="https://rpalternativo.ufma.br/edi%C3%A7%C3%B5es/edi%C3%A7%C3%A3o-46.html#">Edição #46
+                            (2019.2)</a></li>
+                    <li><a style="color: black;" href="http://rpalternativo.ufma.br/edicoes-anteriores.html">Ver
+                            todas</a></li>
+                </ul>
+            </li>
+            <li><a href="http://rpalternativo.ufma.br/expediente.html">Expediente #52</a></li>
+            <li><a style="color: #F37013;" href="https://www.rpalternativo.ufma.br/galeria.html">Galeria</a></li>
+            <li><a href="https://portalpadrao.ufma.br/" target="_blank" rel="noopener noreferrer">UFMA</a></li>
+            <li><a href="mailto: rpalternativo@rpalternativo.ufma.br">Fale Conosco</a></li>
+        </ul>
+    </nav>
+    <header id="header" class="site-header">
+        <a href="http://rpalternativo.ufma.br/index.html#">
+            <img class="logo-rpa" src="https://i.ibb.co/b5g0507n/RP-1-sem-fundo-branco.png"
+                alt="Logotipo da Revista RPA" />
+            <img class="logo-rpa-mobile" src="https://i.ibb.co/6RXR8gXJ/RP-3-sem-fundo-branco.png"
+                alt="Logotipo da Revista RPA" />
+        </a>
+
+        <nav class="nav-header">
+            <ul>
+                <li style="display: none;"><a href="#">Início</a></li>
+                <li class="nav"><a href="https://rpalternativo.ufma.br/sobre.html">Sobre a Revista</a></li>
+                <li class="has-dropdown">
+                    <a>
+                        Edições Anteriores
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+                        </svg>
+                    </a>
+                    <ul class="dropdown-menu" style="padding: 20px; flex-wrap: wrap;">
+                        <li><a style="color: black;"
+                                href="https://rpalternativo.ufma.br/edi%C3%A7%C3%B5es/edi%C3%A7%C3%A3o-51.html#">Edição
+                                #51 (2024.2)</a></li>
+                        <li><a style="color: black;"
+                                href="https://rpalternativo.ufma.br/edi%C3%A7%C3%B5es/edi%C3%A7%C3%A3o-50.html#">Edição
+                                #50 (2024.1)</a></li>
+                        <li><a style="color: black;"
+                                href="http://rpalternativo.ufma.br/edi%C3%A7%C3%B5es/edi%C3%A7%C3%A3o-49.html#">Edição
+                                #49 (2023.1)</a></li>
+                        <li><a style="color: black;"
+                                href="https://rpalternativo.ufma.br/edi%C3%A7%C3%B5es/edi%C3%A7%C3%A3o-48.html#">Edição
+                                #48 (2021.1)</a></li>
+                        <li><a style="color: black;"
+                                href="https://rpalternativo.ufma.br/edi%C3%A7%C3%B5es/edi%C3%A7%C3%A3o-46.html#">Edição
+                                #46 (2019.2)</a></li>
+                        <li><a style="color: black;" href="http://rpalternativo.ufma.br/edicoes-anteriores.html">Ver
+                                todas</a></li>
+                    </ul>
+                </li>
+                <li class="nav"><a href="http://rpalternativo.ufma.br/expediente.html">Expediente #52</a></li>
+                        <li class="nav"><a style="color: #F37013;" href="https://www.rpalternativo.ufma.br/galeria.html">Galeria</a></li>
+                <li class="nav">
+                    <a href="https://portalpadrao.ufma.br/" target="_blank" rel="noopener noreferrer">
+                        <img class="logo-ufma"
+                            src="https://portalpadrao.ufma.br/site/institucional/superintendencias/sce/manual-da-marca/png-logo-ufma-branco.png/@@images/97d6f50d-366b-4768-b057-9d2cf6d0b353.png"
+                            alt="Logotipo da UFMA" />
+                    </a>
+                </li>
+                <li class="menu" id="open-menu-btn">
+                    <a href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                            fill="#e3e3e3">
+                            <path d="M120-680v-80h720v80H120Zm0 480v-80h720v80H120Zm0-240v-80h720v80H120Z" />
+                        </svg>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="slider-wrapper">
+            <div class="slider">
+                <img src="https://rpalternativo.ufma.br/wp-content/uploads/2025/07/EDITADA.png" alt="Foto da Galeria 1">
+            </div>
+        </section>
+
+        <section class="filter-buttons">
+            <button class="filter-btn active" data-filter="geral">Geral</button>
+            <button class="filter-btn" data-filter="equipe">Equipe</button>
+            <button class="filter-btn" data-filter="duplas">Duplas</button>
+        </section>
+
+        <section class="photo-grid">
+            <div class="photo-item" data-category="equipe"><img src="https://rpalternativo.ufma.br/wp-content/uploads/2025/07/Design-scaled.jpg" alt="Foto da equipe"></div>
+            <div class="photo-item" data-category="duplas"><img src="https://rpalternativo.ufma.br/wp-content/uploads/2025/07/Beatriz-e-Wilker-scaled.jpg" alt="Foto de dupla"></div>
+            <div class="photo-item" data-category="equipe"><img src="https://rpalternativo.ufma.br/wp-content/uploads/2025/07/evento.jpg" alt="Foto da equipe"></div>
+            <div class="photo-item" data-category="equipe"><img src="https://rpalternativo.ufma.br/wp-content/uploads/2025/07/fotografia-scaled.jpg" alt="Foto da equipe"></div>
+            <div class="photo-item" data-category="duplas"><img src="https://rpalternativo.ufma.br/wp-content/uploads/2025/07/Ellen-e-Lorena--scaled.jpg" alt="Foto de dupla"></div>
+            <div class="photo-item" data-category="equipe"><img src="https://rpalternativo.ufma.br/wp-content/uploads/2025/07/redes-sociais.jpg" alt="Foto da equipe"></div>
+            <div class="photo-item" data-category="equipe"><img src="https://rpalternativo.ufma.br/wp-content/uploads/2025/07/revisao.jpg" alt="Foto da equipe"></div>
+            <div class="photo-item" data-category="duplas"><img src="https://rpalternativo.ufma.br/wp-content/uploads/2025/07/Escolhida-2-1-scaled.jpg" alt="Foto de dupla"></div>
+            <div class="photo-item" data-category="equipe"><img src="https://rpalternativo.ufma.br/wp-content/uploads/2025/07/site-1--scaled.jpg" alt="Foto da equipe"></div>
+            <div class="photo-item" data-category="duplas"><img src="https://rpalternativo.ufma.br/wp-content/uploads/2025/07/Giovana-G.-e-Mavi-scaled.jpg" alt="Foto da dupla"></div>
+            <div class="photo-item" data-category="duplas"><img src="https://rpalternativo.ufma.br/wp-content/uploads/2025/07/Jp-e-Rafaelle-scaled.jpg" alt="Foto da dupla"></div>
+            <div class="photo-item" data-category="equipe"><img src="https://rpalternativo.ufma.br/wp-content/uploads/2025/07/site-3-scaled.jpg" alt="Foto da equipe"></div>
+            <div class="photo-item" data-category="duplas"><img src="https://rpalternativo.ufma.br/wp-content/uploads/2025/07/Kerienn-e-Samantha-scaled.jpg" alt="Foto da dupla"></div>
+            <div class="photo-item" data-category="equipe"><img src="https://rpalternativo.ufma.br/wp-content/uploads/2025/07/site-4-scaled.jpg" alt="Foto da equipe"></div>
+            <div class="photo-item" data-category="duplas"><img src="https://rpalternativo.ufma.br/wp-content/uploads/2025/07/Madu-e-vitoria-.jpg" alt="Foto da dupla"></div>
+            <div class="photo-item" data-category="duplas"><img src="https://rpalternativo.ufma.br/wp-content/uploads/2025/07/Veronica-e-Safira.jpg" alt="Foto da dupla"></div>
+        </section>
+    </main>
+    
+    <div id="photo-modal-overlay" class="photo-modal-overlay">
+        <div class="photo-modal-content">
+            <button id="modal-close-btn" class="modal-close-btn" aria-label="Fechar foto">&times;</button>
+            <img id="modal-image" src="" alt="Foto ampliada">
+        </div>
+    </div>
+<footer class="site-footer">
+        <div class="container">
+            <div class="footer-top">
+                <a href="https://rpalternativo.ufma.br" style="margin-left: 25px;"><img class="logo-header"
+                        src="https://i.ibb.co/6RXR8gXJ/RP-3-sem-fundo-branco.png" style="width: 70px;"
+                        alt="Logotipo da Revista RPA"></a>
+
+                <div class="footer-socials" style="margin-right: 25px;">
+                    <a href="https://www.instagram.com/rpalternativo" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                            fill="currentColor" class="bi bi-instagram" viewBox="0 0 16 16">
+                            <path
+                                d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334" />
+                        </svg></a>
+                    <a href="mailto: rpalternativo@rpalternativo.ufma.br" aria-label="email"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                            fill="currentColor" class="bi bi-envelope-at-fill" viewBox="0 0 16 16">
+                            <path
+                                d="M2 2A2 2 0 0 0 .05 3.555L8 8.414l7.95-4.859A2 2 0 0 0 14 2zm-2 9.8V4.698l5.803 3.546zm6.761-2.97-6.57 4.026A2 2 0 0 0 2 14h6.256A4.5 4.5 0 0 1 8 12.5a4.49 4.49 0 0 1 1.606-3.446l-.367-.225L8 9.586zM16 9.671V4.697l-5.803 3.546.338.208A4.5 4.5 0 0 1 12.5 8c1.414 0 2.675.652 3.5 1.671" />
+                            <path
+                                d="M15.834 12.244c0 1.168-.577 2.025-1.587 2.025-.503 0-1.002-.228-1.12-.648h-.043c-.118.416-.543.643-1.015.643-.77 0-1.259-.542-1.259-1.434v-.529c0-.844.481-1.4 1.26-1.4.585 0 .87.333.953.63h.03v-.568h.905v2.19c0 .272.18.42.411.42.315 0 .639-.415.639-1.39v-.118c0-1.277-.95-2.326-2.484-2.326h-.04c-1.582 0-2.64 1.067-2.64 2.724v.157c0 1.867 1.237 2.654 2.57 2.654h.045c.507 0 .935-.07 1.18-.18v.731c-.219.1-.643.175-1.237.175h-.044C10.438 16 9 14.82 9 12.646v-.214C9 10.36 10.421 9 12.485 9h.035c2.12 0 3.314 1.43 3.314 3.034zm-4.04.21v.227c0 .586.227.8.581.8.31 0 .564-.17.564-.743v-.367c0-.516-.275-.708-.572-.708-.346 0-.573.245-.573.791" />
+                        </svg></a>
+                        <a href="https://portalpadrao.ufma.br/" target="_blank" rel="noopener noreferrer">
+                        <img class="bi bi-facebook" src="https://portalpadrao.ufma.br/site/institucional/superintendencias/sce/manual-da-marca/png-logo-ufma-branco.png/@@images/97d6f50d-366b-4768-b057-9d2cf6d0b353.png"
+                            alt="Logotipo da UFMA"/></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Revista RP Alternativo - Todos os direitos reservados</p>
+                <p>Av. dos Portugueses, 1966, Bacanga, São Luís, MA - CEP: 65080-805</p>
+            </div>
+            <div
+                style="display: flex; align-items: center; justify-content: center; margin-top: 20px; margin-bottom: 20px;">
+                <a href="#">
+                    <img style="width: 150px; height: auto;"
+                        src="https://www.fluxia.dev.br/minha-revista/imagens/by-fluxia.png" />
+                </a>
+            </div>
+        </div>
+    </footer>
+   <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const header = document.getElementById('header');
+    const openMenuBtn = document.getElementById('open-menu-btn');
+    const closeMenuBtn = document.getElementById('close-menu-btn');
+    const sideMenu = document.getElementById('side-menu');
+    const menuOverlay = document.getElementById('menu-overlay');
+    const slider = document.querySelector('.slider');
+    const slides = document.querySelectorAll('.slider img');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const photoGrid = document.querySelector('.photo-grid');
+    const photoItemsNodeList = photoGrid ? photoGrid.querySelectorAll('.photo-item') : [];
+    const photoItemsArray = Array.from(photoItemsNodeList);
+    const modalOverlay = document.getElementById('photo-modal-overlay');
+    const modalImage = document.getElementById('modal-image');
+    const modalCloseBtn = document.getElementById('modal-close-btn');
+    const todasAsImagens = document.querySelectorAll('img');
+
+    todasAsImagens.forEach(imagem => {
+        imagem.addEventListener('contextmenu', (e) => e.preventDefault());
+        imagem.addEventListener('dragstart', (e) => e.preventDefault());
+    });
+
+    if (header) {
+        const handleScroll = () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        };
+        window.addEventListener('scroll', handleScroll);
+        handleScroll();
+    }
+
+    const toggleMenu = (e) => {
+        if (e) e.preventDefault();
+        sideMenu.classList.toggle('is-open');
+        menuOverlay.classList.toggle('is-open');
+        document.body.classList.toggle('body-no-scroll');
+    };
+
+    if (openMenuBtn && sideMenu && menuOverlay) {
+        openMenuBtn.addEventListener('click', toggleMenu);
+    }
+    if (closeMenuBtn) {
+        closeMenuBtn.addEventListener('click', toggleMenu);
+    }
+    if (menuOverlay) {
+        menuOverlay.addEventListener('click', toggleMenu);
+    }
+
+    if (slider && slides.length > 1) {
+        let currentIndex = 0;
+        const slideCount = slides.length;
+        const autoSlide = () => {
+            currentIndex = (currentIndex + 1) % slideCount;
+            slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+        };
+        setInterval(autoSlide, 5000);
+    }
+
+    function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    function applyFilter(filter) {
+        if (!photoGrid) return;
+        const itemsToReorder = [];
+        photoItemsArray.forEach(item => {
+            const category = item.getAttribute('data-category');
+            const shouldShow = (filter === 'geral' || category === filter);
+            item.classList.toggle('hidden', !shouldShow);
+            if (shouldShow) {
+                itemsToReorder.push(item);
+            }
+        });
+
+        if (filter === 'geral') {
+            const shuffledItems = shuffle(itemsToReorder);
+            shuffledItems.forEach(item => photoGrid.appendChild(item));
+        } else {
+            itemsToReorder.forEach(item => photoGrid.appendChild(item));
+        }
+    }
+
+    if (filterButtons.length > 0 && photoGrid) {
+        applyFilter('geral');
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                applyFilter(button.getAttribute('data-filter'));
+            });
+        });
+    }
+
+    function openModal(src) {
+        if (modalOverlay && modalImage) {
+            modalImage.src = src;
+            modalOverlay.classList.add('is-visible');
+            document.body.classList.add('body-no-scroll');
+        }
+    }
+
+    function closeModal() {
+        if (modalOverlay) {
+            modalOverlay.classList.remove('is-visible');
+            document.body.classList.remove('body-no-scroll');
+        }
+    }
+
+    if (photoGrid) {
+        photoGrid.addEventListener('click', function(e) {
+            const photoItem = e.target.closest('.photo-item');
+            if (photoItem && !photoItem.classList.contains('hidden')) {
+                const img = photoItem.querySelector('img');
+                if (img) {
+                    openModal(img.src);
+                }
+            }
+        });
+    }
+
+    if (modalCloseBtn) {
+        modalCloseBtn.addEventListener('click', closeModal);
+    }
+
+    if (modalOverlay) {
+        modalOverlay.addEventListener('click', function(e) {
+            if (e.target === modalOverlay) {
+                closeModal();
+            }
+        });
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modalOverlay.classList.contains('is-visible')) {
+            closeModal();
+        }
+    });
+});
+   </script>
+</body>
+</html>
